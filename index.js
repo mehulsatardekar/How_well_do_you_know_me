@@ -1,8 +1,15 @@
 const userInput = require('readline-sync');
+const chalk = require('chalk');
 
-const userName = userInput.question("Please Enter your name \n");
+console.log(chalk.bgMagenta("Welcome To how well do yo know me \n"));
 
-console.log(`Welcome ${userName}  \n `);
+const rules = `We have levels in the question there are total 6 question..
+1] if you score above 2 you will be in semi-final 
+2] if you score above 3 you will be in final \n`;
+console.log( chalk.red(rules))
+const userName = userInput.question(chalk.blue("Please Enter your name \n"));
+
+console.log(chalk.green(`Welcome ${userName}  \n `));
 
 const questionsList =[
   {
@@ -40,16 +47,72 @@ const questionsList =[
  let score =0;
  questionsList.forEach((questions)=>{
      
-     let userAnswer = userInput.question(`${questions.question}`);
+     let userAnswer = userInput.question(chalk.yellow(`${questions.question}`));
 
+   
      if(userAnswer.toLowerCase() === questions.answer.toLowerCase()){
        score += 1;
-       console.log(questions.message);
+       console.log(chalk.bgMagenta(questions.message + "\n"));
      }else{
-       score -=0;
-       console.log('oops wrong answer \n');
+       //score -=0;
+       console.log(chalk.bgRed('oops wrong answer \n'));
      }
 
- })
+      if(score === 2){
+      console.log('------------------');
+      console.log( chalk.bgGreen('you are in semi-final \n'));
+      console.log(chalk.bgMagenta(`your current score is ${score} \n`));
+      console.log('------------------');
 
-console.log(`hey ${userName} you're final score is := ${score}`)
+      } else if(score === 3){
+      console.log('------------------');
+      console.log(chalk.bgGreen(`you are in final \n`));
+      console.log(chalk.bgMagenta(`your current score is ${score} \n`));
+      console.log('------------------');
+
+      }
+    
+
+ });
+
+const leaderboard =[
+  {
+    name:'sneha',
+    score:1
+    },{
+      name :'simran',
+      score : 4
+    },{
+      name :'alex',
+      score : 2
+    }
+]
+
+let isbeaten;
+
+console.log(chalk.red("----- leaderboard ------- \n"));
+for(let i=0;i<leaderboard.length;i++){
+ if(score >leaderboard[i].score){
+      isbeaten ='true'
+   }else{
+     isbeaten='false';
+
+   }
+   
+   console.log(chalk.green(leaderboard[i].name) , " " , chalk.blue(leaderboard[i].score) + "\n");
+
+}
+
+
+
+
+console.log(chalk.red("----- leaderboard ------- \n"));
+
+console.log(chalk.bgGreen(`hey ${userName} you're final score is := ${score} \n`));
+
+
+if(isbeaten === 'true'){
+  console.log(chalk.bgRed('you have beaten high score \n'));
+}else{
+  console.log(chalk.bgRed('you havent beaten high score try next time \n'))
+}
